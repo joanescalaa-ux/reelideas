@@ -1,13 +1,16 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { compare } from 'bcryptjs';
-import { authConfig } from './auth.config';
+import { authConfig, sessionCookie } from './auth.config';
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   secret: process.env.NEXTAUTH_SECRET,
   trustHost: true,
   session: { strategy: 'jwt' },
+  cookies: {
+    sessionToken: sessionCookie,
+  },
   providers: [
     Credentials({
       credentials: {
@@ -24,7 +27,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const email = (credentials.email as string).toLowerCase().trim();
 
-        // Dynamic import keeps Supabase out of the edge bundle
         const { getSupabase } = await import('@/lib/supabase');
         const supabase = getSupabase();
 
