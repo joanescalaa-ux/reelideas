@@ -54,7 +54,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    ...authConfig.callbacks,
     jwt({ token, user }) {
       if (user?.id) token.sub = user.id;
       return token;
