@@ -15,7 +15,7 @@ export const sessionCookie = {
 };
 
 export const authConfig = {
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
   session: { strategy: 'jwt' as const },
   pages: { signIn: '/login' },
   providers: [],
