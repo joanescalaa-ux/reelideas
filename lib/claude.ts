@@ -38,6 +38,7 @@ Devuelve SOLO un JSON array con este formato exacto, sin texto adicional:
 }
 
 export async function generateIdeas(profile: Profile, posts: ScrapedPost[]): Promise<ReelIdea[]> {
+  console.log('API KEY prefix:', process.env.ANTHROPIC_API_KEY?.substring(0, 15))
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error('ANTHROPIC_API_KEY not configured');
 
