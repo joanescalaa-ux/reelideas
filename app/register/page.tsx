@@ -2,11 +2,9 @@
 
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function RegisterPage() {
-  const router = useRouter();
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,13 +38,11 @@ export default function RegisterPage() {
       });
 
       if (result?.error) {
-        // Registration succeeded but auto-login failed — redirect to login
-        router.push('/login');
+        window.location.href = '/login';
         return;
       }
 
-      router.push('/');
-      router.refresh();
+      window.location.href = '/';
     } catch {
       setError('Error de conexión. Inténtalo de nuevo.');
     } finally {
