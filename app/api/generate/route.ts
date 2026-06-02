@@ -110,8 +110,8 @@ export async function POST(req: NextRequest) {
     // Step 2: Generate ideas with Claude
     const ideas = await generateIdeas(profile, posts);
 
-    // Step 3: Save to Notion
-    let notionUrl: string | undefined;
+    // Step 3: Save to Notion (optional — skipped if env vars not set)
+    let notionUrl: string | null = null;
     try {
       notionUrl = await createNotionPage(ideas, profile);
     } catch (err) {

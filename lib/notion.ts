@@ -7,10 +7,10 @@ function rt(content: string): RichText[] {
   return [{ type: 'text', text: { content: content.slice(0, 2000) } }];
 }
 
-export async function createNotionPage(ideas: ReelIdea[], profile: Profile): Promise<string> {
+export async function createNotionPage(ideas: ReelIdea[], profile: Profile): Promise<string | null> {
   const apiKey = process.env.NOTION_API_KEY;
   const databaseId = process.env.NOTION_DATABASE_ID;
-  if (!apiKey || !databaseId) throw new Error('Notion env vars not configured');
+  if (!apiKey || !databaseId) return null;
 
   const notion = new Client({ auth: apiKey });
 
@@ -89,5 +89,5 @@ export async function createNotionPage(ideas: ReelIdea[], profile: Profile): Pro
     ] as any,
   });
 
-  return (page as any).url ?? `https://notion.so/${page.id.replace(/-/g, '')}`;
+  return ((page as any).url as string | undefined) ?? `https://notion.so/${page.id.replace(/-/g, '')}`;
 }
